@@ -1,59 +1,50 @@
-# Übung 1
+# Übung 2
 
-1. Anpassen des Widgets in der manifest.json
-
-```javascript
-"layout-widgets": [
-    {
-        "widgetRole": "basemapChangerWidget",
-        "template": "seasons",
-        "window": {
-            "title": "${ui.windowTitle}",
-            "autofocus": false,
-            "dockTool": "basemapChangerToggleTool",
-            "minimizeOnClose": true,
-            "marginBox": {
-                "w": 400,
-                "h": 500,
-                "b": 100,
-                "l": 20
-            }
-        }
-    }
-]
-```
-
-2. Anpassen des Widgets in der app.json
+1. Hinzufügen eines weiteren Toolsets zur toolset-Konfiguration in der app.json:
 
 ```javascript
-"templates": {
-    "TemplateModel": {
-        "_templates": [
+"toolset": {
+    "ToolsetManager": {
+        "toolsets": [
+            ...,
             {
-                "name": "seasons",
-                "widgets": [
-                    {
-                        "widgetRole": "basemapChangerWidget",
-                        "window": {
-                            "marginBox": {
-                                "t": 40,
-                                "b": 40,
-                                "r": 0,
-                                "w": 500
-                            },
-                            "fixEdgesInViewPort": {
-                                "l": false
-                            },
-                            "closable": false,
-                            "collapsable": true,
-                            "collapseAxis": {
-                                "l": true
-                            }
-                        }
-                    }
-                ]
+                "id": "dropdown",
+                "cssClass": "ctWDYWBtn ctPrimaryInput",
+                "title": "${toolsets.whatDoYouWant}",
+                "tools": [
+                    "tocToggleTool",
+                    "printingToggleTool",
+                    "sharelinkTool",
+                    "basemapChangerToggleTool"
+                ],
+                "container": "map",
+                "position": {
+                    "rel_t": 80,
+                    "rel_l": 20
+                },
+                "windowType": "dropdown"
             }
         ]
     }
 }
+```
+
+2. Anpassen der nls-Strings der app.json:
+
+nls/bundle.js
+```javascript
+...
+toolsets: {
+    whatDoYouWant: "What do you want to do?"
+},
+...
+```
+
+nls/de/bundle.js
+```javascript
+...
+toolsets: {
+    whatDoYouWant: "Was m\u00f6chten Sie tun?"
+},
+...
 ```
