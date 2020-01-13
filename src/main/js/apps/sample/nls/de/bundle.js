@@ -7,6 +7,9 @@ module.exports = {
             content: "<p>Dies ist ein Beispiel f\xFCr ein Impressum.</p>"
         }
     },
+    toolsets: {
+        whatDoYouWant: "Was m\u00f6chten Sie tun?"
+    },
     map: {
         koeln1: {
             title: "Basisdaten",

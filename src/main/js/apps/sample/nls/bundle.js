@@ -8,6 +8,9 @@ module.exports = {
                 content: "<p>This is a sample for an imprint.</p>"
             }
         },
+        toolsets: {
+            whatDoYouWant: "What do you want to do?"
+        },
         map: {
             koeln1: {
                 title: "Basic Data",
