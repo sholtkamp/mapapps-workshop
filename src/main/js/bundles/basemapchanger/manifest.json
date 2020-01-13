@@ -18,10 +18,10 @@
                 "dockTool": "basemapChangerToggleTool",
                 "minimizeOnClose": true,
                 "marginBox": {
-                    "w": 355,
-                    "h": 455,
+                    "w": 400,
+                    "h": 500,
                     "b": 100,
-                    "l": 50
+                    "l": 20
                 }
             }
         }

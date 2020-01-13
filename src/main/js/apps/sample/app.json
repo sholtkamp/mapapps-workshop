@@ -430,6 +430,25 @@
                         "name": "seasons",
                         "widgets": [
                             {
+                                "widgetRole": "basemapChangerWidget",
+                                "window": {
+                                    "marginBox": {
+                                        "t": 40,
+                                        "b": 40,
+                                        "r": 0,
+                                        "w": 500
+                                    },
+                                    "fixEdgesInViewPort": {
+                                        "l": false
+                                    },
+                                    "closable": false,
+                                    "collapsable": true,
+                                    "collapseAxis": {
+                                        "l": true
+                                    }
+                                }
+                            },
+                            {
                                 "widgetRole": "drawer_button",
                                 "attachTo": "map_topleft",
                                 "props": {
