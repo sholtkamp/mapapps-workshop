@@ -45,7 +45,12 @@
             "properties": {
                 "widgetRole": "basemapChangerWidget"
             },
-            "references": []
+            "references": [
+                {
+                    "name": "_basemapsModel",
+                    "providing": "map-basemaps-api.BasemapsModel"
+                }
+            ]
         },
         {
             "name": "BasemapChangerToggleTool",
