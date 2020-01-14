@@ -15,12 +15,12 @@ export default class BasemapChangerWidgetFactory {
         });
 
         let vm = new Vue(BasemapChangerWidget);
-        vm.basemaps = basemaps;
-        vm.selectedId = basemapsModel.selectedId;
 
-        vm.$on("changeBasemap", (selectedId)=>{
-            basemapsModel.selectedId = selectedId;
-        });
+        Binding.for(vm, basemapsModel)
+            .syncAll("selectedId")
+            .syncAllToLeft("basemaps")
+            .syncToLeftNow()
+            .enable();
 
         return VueDijit(vm);
     }
