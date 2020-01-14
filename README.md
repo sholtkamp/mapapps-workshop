@@ -1,13 +1,29 @@
-# Übung 6
+# Übung 7
 
-1. Symbols zur BasemapChangerWidgetFactory.js hinzufügen
+1. Hinzufügen einer default selectedBasemapId-Property in der Konfiguration der BasemapChangerWidgetFactory in der manifest.json:
 
 ```javascript
-const _vm = new Symbol("_vm");
-const _binding = new Symbol("_binding");
+{
+    "name": "BasemapChangerWidgetFactory",
+    "provides": [
+        "dijit.Widget",
+        "maptest.Widget"
+    ],
+    "instanceFactory": true,
+    "properties": {
+        "widgetRole": "basemapChangerWidget",
+        "selectedBasemapId": "esri_street"
+    },
+    "references": [
+        {
+            "name": "_basemapsModel",
+            "providing": "map-basemaps-api.BasemapsModel"
+        }
+    ]
+}
 ```
 
-2. _initComponent-Methode hinzufügen, welche die Vue-Komponente erzeugt und in einem Symbol speichert. Zusätzlich wird das Binding erzeugt:
+2. Auslesen der Property in der BasemapChangerWidgetFactory und setzen der konfigurierten Basemap-ID:
 
 ```javascript
 _initComponent() {
@@ -19,6 +35,10 @@ _initComponent() {
         }
     });
 
+    const properties = this._properties;
+    const selectedBasemapId = properties.selectedBasemapId;
+    basemapsModel.selectedId = selectedBasemapId;
+
     const vm = this[_vm] = new Vue(BasemapChangerWidget);
 
     this[_binding] = Binding.for(vm, basemapsModel)
@@ -26,27 +46,5 @@ _initComponent() {
         .syncAllToLeft("basemaps")
         .syncToLeftNow()
         .enable();
-}
-```
-
-3. Vue-Komponente in der createInstance-Methode zurückgeben:
-
-```javascript
-createInstance() {
-    return VueDijit(this[_vm]);
-}
-```
-
-4. activate und deactivate-Methoden hinzufügen, die beim Starten und Beenden des Bundles aufgerufen werden:
-
-```javascript
-activate() {
-    this._initComponent();
-}
-
-deactivate() {
-    this[_binding].unbind();
-    this[_binding] = undefined;
-    this[_vm] = undefined;
 }
 ```
