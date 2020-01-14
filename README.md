@@ -1,11 +1,9 @@
 # Übung 4
 
-1. Auslösen des @change-Events an der RadioButtonGroup in der BasemapChangerWidget.vue:
+1. Entfernen des @change-Events von der RadioButtonGroup in der BasemapChangerWidget.vue:
 
 ```javascript
-<v-radio-group
-    v-model="selectedId"
-    @change="changeBasemap">
+<v-radio-group v-model="selectedId">
     <v-radio
         v-for="basemap in basemaps"
         :key="basemap.id"
@@ -15,7 +13,7 @@
 </v-radio-group>
 ```
 
-2. changeBasemap-Methode zur BasemapChangerWidget.vue hinzufügen:
+2. Entfernen der changeBasemap-Methode in der BasemapChangerWidget.vue:
 
 ```javascript
 export default {
@@ -26,19 +24,30 @@ export default {
             selectedId: undefined,
             basemaps: []
         };
-    },
-    methods: {
-        changeBasemap: function () {
-            this.$emit("changeBasemap", this.selectedId);
-        }
     }
 };
 ```
 
-3. In der BasemapChangerWidgetFactory.js an das changeBasemap-Event binden:
+3. Entfernen des Bindings an das changeBasemap-Event. Verwendung der "apprt-binding/Binding"-Klasse zur erzeugen eines Bindings:
 
 ```javascript
-vm.$on("changeBasemap", (selectedId)=>{
-    basemapsModel.selectedId = selectedId;
-});
+createInstance() {
+    const basemapsModel = this._basemapsModel;
+    const basemaps = basemapsModel.basemaps.map((basemap) => {
+        return {
+            id: basemap.id,
+            title: basemap.title
+        }
+    });
+
+    let vm = new Vue(BasemapChangerWidget);
+
+    Binding.for(vm, basemapsModel)
+        .syncAll("selectedId")
+        .syncAllToLeft("basemaps")
+        .syncToLeftNow()
+        .enable();
+
+    return VueDijit(vm);
+}
 ```
