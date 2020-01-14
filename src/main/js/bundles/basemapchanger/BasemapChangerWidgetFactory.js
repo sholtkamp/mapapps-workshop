@@ -27,7 +27,8 @@ export default class BasemapChangerWidgetFactory {
         const basemaps = basemapsModel.basemaps.map((basemap) => {
             return {
                 id: basemap.id,
-                title: basemap.title
+                title: basemap.title,
+                thumbnailUrl: basemap.thumbnailUrl
             }
         });
 
