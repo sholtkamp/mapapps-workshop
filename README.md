@@ -1,120 +1,101 @@
-# Übung 10
+# Übung 11
 
-1. Hinzufügen der thumbnailUrl-Property zum basemaps-Array in der BasemapChangerWidgetFactory:
-
-```javascript
-const basemaps = basemapsModel.basemaps.map((basemap) => {
-    return {
-        id: basemap.id,
-        title: basemap.title,
-        thumbnailUrl: basemap.thumbnailUrl
-    }
-});
-```
-
-2. Anpassen der basemaps in der app.json:
+1. Hinzufügen der MapWidgetModel-Referenz zur BasemapChangerWidgetFactory:
 
 ```javascript
-"basemaps": [
-    {
-        "id": "esri_street",
-        "basemap": "streets",
-        "title": "Strassen",
-        "selected": true
+{
+    "name": "BasemapChangerWidgetFactory",
+    "provides": [
+        "dijit.Widget",
+        "maptest.Widget"
+    ],
+    "instanceFactory": true,
+    "properties": {
+        "widgetRole": "basemapChangerWidget",
+        "selectedBasemapId": "esri_street"
     },
-    {
-        "id": "esri_street2",
-        "basemap": "streets-vector",
-        "title": "Strassen Vector"
-    },
-    {
-        "id": "esri_satellite",
-        "basemap": "satellite",
-        "title": "Satellit"
-    },
-    {
-        "id": "esri_hybrid",
-        "basemap": "hybrid",
-        "title": "Hybrid"
-    }
-]
-```
-
-3. Binden der thumbnail-url-Propery an die basemap-Komponente in der BasemapChangerWidget.vue-Komponente:
-
-```javascript
-<basemap
-    v-for="basemap in basemaps"
-    class="basemapEntry"
-    :key="basemap.id"
-    :id="basemap.id"
-    :title="basemap.title"
-    :is-selected="basemap.id === selectedId"
-    :thumbnail-url="basemap.thumbnailUrl"
-    @changeBasemap="selectedId = basemap.id"
-></basemap>
-```
-
-4. Hinzufügen der thumbnailUrl-Property in der Basemap.vue-Datei:
-
-```javascript
-props: {
-    id: {
-        type: String,
-        default: ""
-    },
-    title: {
-        type: String,
-        default: ""
-    },
-    isSelected: {
-        type: Boolean,
-        default: false
-    },
-    thumbnailUrl: {
-        type: String,
-        default: ""
-    }
+    "references": [
+        {
+            "name": "_mapWidgetModel",
+            "providing": "map-widget.MapWidgetModel"
+        },
+        {
+            "name": "_basemapsModel",
+            "providing": "map-basemaps-api.BasemapsModel"
+        }
+    ]
 }
 ```
 
-5. Hinzufügen der thumbnailUrl-Property in der Basemap.vue-Datei:
+2. Zoom-Property zur BasemapChangerWidget.vue hinzufügen:
 
 ```javascript
-props: {
-    id: {
-        type: String,
-        default: ""
+export default {
+    components: {
+        basemap: Basemap
     },
-    title: {
-        type: String,
-        default: ""
-    },
-    isSelected: {
-        type: Boolean,
-        default: false
-    },
-    thumbnailUrl: {
-        type: String,
-        default: ""
+    mixins: [Bindable],
+    data: function () {
+        return {
+            selectedId: undefined,
+            basemaps: [],
+            zoom: undefined
+        };
     }
+};
+```
+
+3. Anlegen eines neuen Bindings für das MapWidgetModel in der BasemapChangerWidgetFactory:
+
+```javascript
+const _mapWidgetModelBinding = Symbol("_mapWidgetModelBinding");
+```
+
+```javascript
+deactivate() {
+    this[_binding].unbind();
+    this[_binding] = undefined;
+    this[_mapWidgetModelBinding].unbind();
+    this[_mapWidgetModelBinding] = undefined;
+    this[_vm] = undefined;
 }
 ```
 
-6. Anpassen des templates der Basemap.vue-Datei:
+```javascript
+const mapWidgetModel = this[_mapWidgetModelBinding] = this._mapWidgetModel;
+Binding.for(vm, mapWidgetModel)
+    .syncAll("zoom")
+    .syncToLeftNow()
+    .enable();
+```
+
+4. Hinzufügen eines Sliders zum BasemapChangerWidget.vue:
 
 ```javascript
 <template>
-    <v-container
-        @click="$emit('changeBasemap')"
-        :class="{selected: isSelected}"
-        pa-0
-        grid-list-md text-xs-center>
-        <v-layout row wrap align-center>
-            <v-flex md6>
-                <v-img :src="thumbnailUrl"></v-img>
+    <v-container grid-list-md>
+        <v-layout row wrap>
+            <v-flex md12>
+                <basemap
+                    v-for="basemap in basemaps"
+                    class="basemapEntry"
+                    :key="basemap.id"
+                    :id="basemap.id"
+                    :title="basemap.title"
+                    :is-selected="basemap.id === selectedId"
+                    :thumbnail-url="basemap.thumbnailUrl"
+                    @changeBasemap="selectedId = basemap.id"
+                ></basemap>
             </v-flex>
-            <v-flex md6>{{ title }}</v-flex>
+            <v-flex md12>
+                <v-slider
+                    v-model="zoom"
+                    max="15"
+                    min="1"
+                    label="Zoom"
+                    thumb-label>
+                </v-slider>
+            </v-flex>
         </v-layout>
     </v-container>
 </template>
