@@ -1,22 +1,25 @@
 <template>
     <v-container grid-list-md>
         <v-layout row wrap>
-            <v-radio-group v-model="selectedId">
-                <v-radio
-                    v-for="basemap in basemaps"
-                    :key="basemap.id"
-                    :label="basemap.title"
-                    :value="basemap.id"
-                ></v-radio>
-            </v-radio-group>
+            <basemap
+                v-for="basemap in basemaps"
+                class="basemapEntry"
+                :key="basemap.id"
+                :id="basemap.id"
+                :title="basemap.title"
+                @changeBasemap="selectedId = basemap.id"
+            ></basemap>
         </v-layout>
     </v-container>
 </template>
 <script>
     import Bindable from "apprt-vue/mixins/Bindable";
+    import Basemap from "./Basemap.vue";
 
     export default {
-        components: {},
+        components: {
+            basemap: Basemap
+        },
         mixins: [Bindable],
         data: function () {
             return {
