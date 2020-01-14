@@ -1,6 +1,7 @@
 <template>
     <v-container
         @click="$emit('changeBasemap')"
+        :class="{selected: isSelected}"
         grid-list-md>
         <v-layout row wrap>
             <v-flex md12>{{ title }}</v-flex>
@@ -17,6 +18,10 @@
             title: {
                 type: String,
                 default: ""
+            },
+            isSelected: {
+                type: Boolean,
+                default: false
             }
         }
     };

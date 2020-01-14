@@ -7,6 +7,7 @@
                 :key="basemap.id"
                 :id="basemap.id"
                 :title="basemap.title"
+                :isSelected="basemap.id === selectedId"
                 @changeBasemap="selectedId = basemap.id"
             ></basemap>
         </v-layout>
