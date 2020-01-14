@@ -1,7 +1,9 @@
 <template>
     <v-container grid-list-md>
         <v-layout row wrap>
-            <v-radio-group v-model="selectedId">
+            <v-radio-group
+                v-model="selectedId"
+                @change="changeBasemap">
                 <v-radio
                     v-for="basemap in basemaps"
                     :key="basemap.id"
@@ -23,6 +25,11 @@
                 selectedId: undefined,
                 basemaps: []
             };
+        },
+        methods: {
+            changeBasemap: function () {
+                this.$emit("changeBasemap", this.selectedId);
+            }
         }
     };
 </script>
