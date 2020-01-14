@@ -15,10 +15,10 @@ export default class BasemapChangerWidgetFactory {
         });
 
         let vm = new Vue(BasemapChangerWidget);
+        vm.basemaps = basemaps;
 
         Binding.for(vm, basemapsModel)
             .syncAll("selectedId")
-            .syncAllToLeft("basemaps")
             .syncToLeftNow()
             .enable();
 
