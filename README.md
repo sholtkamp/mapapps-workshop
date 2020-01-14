@@ -1,50 +1,68 @@
-# Übung 7
+# Übung 8
 
-1. Hinzufügen einer default selectedBasemapId-Property in der Konfiguration der BasemapChangerWidgetFactory in der manifest.json:
+1. Hinzufügen der Basemap.vue Komponente:
 
 ```javascript
-{
-    "name": "BasemapChangerWidgetFactory",
-    "provides": [
-        "dijit.Widget",
-        "maptest.Widget"
-    ],
-    "instanceFactory": true,
-    "properties": {
-        "widgetRole": "basemapChangerWidget",
-        "selectedBasemapId": "esri_street"
-    },
-    "references": [
-        {
-            "name": "_basemapsModel",
-            "providing": "map-basemaps-api.BasemapsModel"
+<template>
+    <v-container
+        @click="$emit('changeBasemap')"
+        grid-list-md>
+        <v-layout row wrap>
+            <v-flex md12>{{ title }}</v-flex>
+        </v-layout>
+    </v-container>
+</template>
+<script>
+    export default {
+        props: {
+            id: {
+                type: String,
+                default: ""
+            },
+            title: {
+                type: String,
+                default: ""
+            }
         }
-    ]
-}
+    };
+</script>
 ```
 
-2. Auslesen der Property in der BasemapChangerWidgetFactory und setzen der konfigurierten Basemap-ID:
+2. Registrierung der Vue-Komponente in der BasemapChangerWidget.vue:
 
 ```javascript
-_initComponent() {
-    const basemapsModel = this._basemapsModel;
-    const basemaps = basemapsModel.basemaps.map((basemap) => {
+import Bindable from "apprt-vue/mixins/Bindable";
+import Basemap from "./Basemap.vue";
+
+export default {
+    components: {
+        basemap: Basemap
+    },
+    mixins: [Bindable],
+    data: function () {
         return {
-            id: basemap.id,
-            title: basemap.title
-        }
-    });
+            selectedId: undefined,
+            basemaps: []
+        };
+    }
+};
+```
 
-    const properties = this._properties;
-    const selectedBasemapId = properties.selectedBasemapId;
-    basemapsModel.selectedId = selectedBasemapId;
+3. Hinzufügen der basemap-Komponente zum template der BasemapChangerWidget.vue:
 
-    const vm = this[_vm] = new Vue(BasemapChangerWidget);
-
-    this[_binding] = Binding.for(vm, basemapsModel)
-        .syncAll("selectedId")
-        .syncAllToLeft("basemaps")
-        .syncToLeftNow()
-        .enable();
-}
+```javascript
+<template>
+    <v-container grid-list-md>
+        <v-layout row wrap>
+            <basemap
+                v-for="basemap in basemaps"
+                class="basemapEntry"
+                :key="basemap.id"
+                :id="basemap.id"
+                :title="basemap.title"
+                @changeBasemap="selectedId = basemap.id"
+            ></basemap>
+        </v-layout>
+    </v-container>
+</template>
 ```
