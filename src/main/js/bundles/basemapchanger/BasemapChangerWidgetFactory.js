@@ -5,6 +5,7 @@ import BasemapChangerWidget from "./BasemapChangerWidget.vue";
 
 const _vm = Symbol("_vm");
 const _binding = Symbol("_binding");
+const _mapWidgetModelBinding = Symbol("_mapWidgetModelBinding");
 
 export default class BasemapChangerWidgetFactory {
 
@@ -15,6 +16,8 @@ export default class BasemapChangerWidgetFactory {
     deactivate() {
         this[_binding].unbind();
         this[_binding] = undefined;
+        this[_mapWidgetModelBinding].unbind();
+        this[_mapWidgetModelBinding] = undefined;
         this[_vm] = undefined;
     }
 
@@ -41,6 +44,12 @@ export default class BasemapChangerWidgetFactory {
 
         this[_binding] = Binding.for(vm, basemapsModel)
             .syncAll("selectedId")
+            .syncToLeftNow()
+            .enable();
+
+        const mapWidgetModel = this[_mapWidgetModelBinding] = this._mapWidgetModel;
+        Binding.for(vm, mapWidgetModel)
+            .syncAll("zoom")
             .syncToLeftNow()
             .enable();
     }

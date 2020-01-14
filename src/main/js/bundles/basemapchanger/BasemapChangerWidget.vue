@@ -1,16 +1,27 @@
 <template>
     <v-container grid-list-md>
         <v-layout row wrap>
-            <basemap
-                v-for="basemap in basemaps"
-                class="basemapEntry"
-                :key="basemap.id"
-                :id="basemap.id"
-                :title="basemap.title"
-                :is-selected="basemap.id === selectedId"
-                :thumbnail-url="basemap.thumbnailUrl"
-                @changeBasemap="selectedId = basemap.id"
-            ></basemap>
+            <v-flex md12>
+                <basemap
+                    v-for="basemap in basemaps"
+                    class="basemapEntry"
+                    :key="basemap.id"
+                    :id="basemap.id"
+                    :title="basemap.title"
+                    :is-selected="basemap.id === selectedId"
+                    :thumbnail-url="basemap.thumbnailUrl"
+                    @changeBasemap="selectedId = basemap.id"
+                ></basemap>
+            </v-flex>
+            <v-flex md12>
+                <v-slider
+                    v-model="zoom"
+                    max="15"
+                    min="1"
+                    label="Zoom"
+                    thumb-label>
+                </v-slider>
+            </v-flex>
         </v-layout>
     </v-container>
 </template>
@@ -26,7 +37,8 @@
         data: function () {
             return {
                 selectedId: undefined,
-                basemaps: []
+                basemaps: [],
+                zoom: undefined
             };
         }
     };
