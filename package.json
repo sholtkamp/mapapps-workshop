@@ -3,7 +3,10 @@
     "description": "test build",
     "version": "0.0.1",
     "devDependencies": {
-        "ct-mapapps-gulp-js": "^0.2.5",
+        "gulp": "^3.9.1",
+        "run-sequence": "^1.2.2",
+        "ct-mapapps-gulp-js": "^0.1.3",
+        "eslint-config-ct-prodeng": "^1.0.5",
         "vue-template-compiler": "2.6.6"
     }
 }
