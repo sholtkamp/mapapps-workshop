@@ -3,8 +3,8 @@
 1. Symbols zur BasemapChangerWidgetFactory.js hinzufügen
 
 ```javascript
-const _vm = new Symbol("_vm");
-const _binding = new Symbol("_binding");
+const _vm = Symbol("_vm");
+const _binding = Symbol("_binding");
 ```
 
 2. _initComponent-Methode hinzufügen, welche die Vue-Komponente erzeugt und in einem Symbol speichert. Zusätzlich wird das Binding erzeugt:
