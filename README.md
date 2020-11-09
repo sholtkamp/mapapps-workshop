@@ -62,8 +62,8 @@ deactivate() {
 ```
 
 ```javascript
-const mapWidgetModel = this[_mapWidgetModelBinding] = this._mapWidgetModel;
-Binding.for(vm, mapWidgetModel)
+const mapWidgetModel = this._mapWidgetModel;
+this[_mapWidgetModelBinding] = Binding.for(vm, mapWidgetModel)
     .syncAll("zoom")
     .syncToLeftNow()
     .enable();
