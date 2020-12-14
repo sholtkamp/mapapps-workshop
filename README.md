@@ -78,30 +78,7 @@ props: {
 }
 ```
 
-5. Hinzufügen der thumbnailUrl-Property in der Basemap.vue-Datei:
-
-```javascript
-props: {
-    id: {
-        type: String,
-        default: ""
-    },
-    title: {
-        type: String,
-        default: ""
-    },
-    isSelected: {
-        type: Boolean,
-        default: false
-    },
-    thumbnailUrl: {
-        type: String,
-        default: ""
-    }
-}
-```
-
-6. Anpassen des templates der Basemap.vue-Datei:
+5. Anpassen des templates der Basemap.vue-Datei:
 
 ```javascript
 <template>
