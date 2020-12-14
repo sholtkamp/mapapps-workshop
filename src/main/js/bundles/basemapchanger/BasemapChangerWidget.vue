@@ -9,6 +9,7 @@
                     :key="basemap.id"
                     :label="basemap.title"
                     :value="basemap.id"
+                    color="primary"
                 ></v-radio>
             </v-radio-group>
         </v-layout>
