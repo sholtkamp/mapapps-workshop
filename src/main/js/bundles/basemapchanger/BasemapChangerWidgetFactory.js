@@ -3,23 +3,23 @@ import Vue from "apprt-vue/Vue";
 import VueDijit from "apprt-vue/VueDijit";
 import BasemapChangerWidget from "./BasemapChangerWidget.vue";
 
-const _vm = Symbol("_vm");
-const _binding = Symbol("_binding");
-
 export default class BasemapChangerWidgetFactory {
+
+    #vm = undefined;
+    #binding = undefined;
 
     activate() {
         this._initComponent();
     }
 
     deactivate() {
-        this[_binding].unbind();
-        this[_binding] = undefined;
-        this[_vm] = undefined;
+        this.#binding.unbind();
+        this.#binding = undefined;
+        this.#vm = undefined;
     }
 
     createInstance() {
-        return VueDijit(this[_vm]);
+        return VueDijit(this.#vm);
     }
 
     _initComponent() {
@@ -31,10 +31,10 @@ export default class BasemapChangerWidgetFactory {
             }
         });
 
-        const vm = this[_vm] = new Vue(BasemapChangerWidget);
+        const vm = this.#vm = new Vue(BasemapChangerWidget);
         vm.basemaps = basemaps;
 
-        this[_binding] = Binding.for(vm, basemapsModel)
+        this.#binding = Binding.for(vm, basemapsModel)
             .syncAll("selectedId")
             .syncToLeftNow()
             .enable();
