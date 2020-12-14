@@ -1,10 +1,10 @@
 # Übung 6
 
-1. Symbols zur BasemapChangerWidgetFactory.js hinzufügen
+1. Private Variablen zur BasemapChangerWidgetFactory.js hinzufügen
 
 ```javascript
-const _vm = Symbol("_vm");
-const _binding = Symbol("_binding");
+#vm = undefined;
+#binding = undefined;
 ```
 
 2. _initComponent-Methode hinzufügen, welche die Vue-Komponente erzeugt und in einem Symbol speichert. Zusätzlich wird das Binding erzeugt:
@@ -19,7 +19,7 @@ _initComponent() {
         }
     });
 
-    const vm = this[_vm] = new Vue(BasemapChangerWidget);
+    const vm = this.#vm = new Vue(BasemapChangerWidget);
 
     this[_binding] = Binding.for(vm, basemapsModel)
         .syncAll("selectedId")
@@ -33,7 +33,7 @@ _initComponent() {
 
 ```javascript
 createInstance() {
-    return VueDijit(this[_vm]);
+    return VueDijit(this.#vm);
 }
 ```
 
@@ -45,8 +45,8 @@ activate() {
 }
 
 deactivate() {
-    this[_binding].unbind();
-    this[_binding] = undefined;
-    this[_vm] = undefined;
+    this.#binding.unbind();
+    this.#binding = undefined;
+    this.#vm = undefined;
 }
 ```
