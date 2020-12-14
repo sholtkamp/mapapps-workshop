@@ -32,8 +32,7 @@ export default class BasemapChangerWidgetFactory {
         });
 
         const properties = this._properties;
-        const selectedBasemapId = properties.selectedBasemapId;
-        basemapsModel.selectedId = selectedBasemapId;
+        basemapsModel.selectedId = properties.selectedBasemapId;
 
         const vm = this.#vm = new Vue(BasemapChangerWidget);
         vm.basemaps = basemaps;
