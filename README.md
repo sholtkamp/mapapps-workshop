@@ -1,59 +1,68 @@
-# Übung 9
+# Übung 8
 
-1. Hinzufügen der isSelected-Property zur Basemap.vue Komponente:
-
-```javascript
-export default {
-    props: {
-        id: {
-            type: String,
-            default: ""
-        },
-        title: {
-            type: String,
-            default: ""
-        },
-        isSelected: {
-            type: Boolean,
-            default: false
-        }
-    }
-};
-```
-
-2. Binden der selected Klasse an den container der Basemap.vue-Komponente, wenn isSelected den Wert true annimmt:
+1. Hinzufügen der Basemap.vue Komponente:
 
 ```javascript
 <template>
     <v-container
         @click="$emit('changeBasemap')"
-        :class="{selected: isSelected}"
         grid-list-md>
         <v-layout row wrap>
             <v-flex md12>{{ title }}</v-flex>
         </v-layout>
     </v-container>
 </template>
+<script>
+    export default {
+        props: {
+            id: {
+                type: String,
+                default: ""
+            },
+            title: {
+                type: String,
+                default: ""
+            }
+        }
+    };
+</script>
 ```
 
-3. Binden der isSelected-Propery an die basemap Komponente in der BasemapChangerWidget.vue-Komponente:
+2. Registrierung der Vue-Komponente in der BasemapChangerWidget.vue:
 
 ```javascript
-<basemap
-    v-for="basemap in basemaps"
-    class="basemapEntry"
-    :key="basemap.id"
-    :id="basemap.id"
-    :title="basemap.title"
-    :isSelected="basemap.id === selectedId"
-    @changeBasemap="selectedId = basemap.id"
-></basemap>
+import Bindable from "apprt-vue/mixins/Bindable";
+import Basemap from "./Basemap.vue";
+
+export default {
+    components: {
+        basemap: Basemap
+    },
+    mixins: [Bindable],
+    data: function () {
+        return {
+            selectedId: undefined,
+            basemaps: []
+        };
+    }
+};
 ```
 
-4. Hinzufügen eines Styles für die selected-Klasse in der styles.css:
+3. Hinzufügen der basemap-Komponente zum template der BasemapChangerWidget.vue:
 
 ```javascript
-.ctAppRoot .basemapChangerWidget .basemapEntry.selected {
-    border: 2px solid blue;
-}
+<template>
+    <v-container grid-list-md>
+        <v-layout row wrap>
+            <basemap
+                v-for="basemap in basemaps"
+                class="basemapEntry"
+                :key="basemap.id"
+                :id="basemap.id"
+                :title="basemap.title"
+                @changeBasemap="selectedId = basemap.id"
+            ></basemap>
+        </v-layout>
+    </v-container>
+</template>
 ```
