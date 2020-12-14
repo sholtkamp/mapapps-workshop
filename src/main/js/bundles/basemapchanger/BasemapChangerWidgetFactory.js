@@ -14,7 +14,7 @@ export default class BasemapChangerWidgetFactory {
             }
         });
 
-        let vm = new Vue(BasemapChangerWidget);
+        const vm = new Vue(BasemapChangerWidget);
         vm.basemaps = basemaps;
         vm.selectedId = basemapsModel.selectedId;
         return VueDijit(vm);
