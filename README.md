@@ -22,7 +22,18 @@
 }
 ```
 
-2. Attribute zur data-function der BasemapChangerWidget.vue hinzufügen:
+2. Abhängigkeit zum map-basemaps-api Bundle hinzufügen:
+
+```javascript
+"dependencies": {
+    "esri": "^4.10.0",
+    "apprt-vue": "^4.7.0",
+    "apprt-vuetify": "^4.7.0",
+    "map-basemaps-api": "^4.7.0"
+}
+```
+
+3. Attribute zur data-function der BasemapChangerWidget.vue hinzufügen:
 
 ```javascript
 export default {
@@ -37,7 +48,7 @@ export default {
 };
 ```
 
-3. RadioButton-Group zum template der BasemapChangerWidget.vue hinzufügen:
+4. RadioButton-Group zum template der BasemapChangerWidget.vue hinzufügen:
 
 ```javascript
 <template>
@@ -56,7 +67,7 @@ export default {
 </template>
 ```
 
-4. basemaps-Array in der BasemapChangerWidgetFactory erzeugen:
+5. basemaps-Array in der BasemapChangerWidgetFactory erzeugen:
 
 ```javascript
 createInstance() {
