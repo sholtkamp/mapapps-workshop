@@ -23,7 +23,6 @@ _initComponent() {
 
     this[_binding] = Binding.for(vm, basemapsModel)
         .syncAll("selectedId")
-        .syncAllToLeft("basemaps")
         .syncToLeftNow()
         .enable();
 }
