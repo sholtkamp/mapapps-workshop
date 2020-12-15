@@ -3,26 +3,26 @@ import Vue from "apprt-vue/Vue";
 import VueDijit from "apprt-vue/VueDijit";
 import BasemapChangerWidget from "./BasemapChangerWidget.vue";
 
-const _vm = Symbol("_vm");
-const _binding = Symbol("_binding");
-const _mapWidgetModelBinding = Symbol("_mapWidgetModelBinding");
-
 export default class BasemapChangerWidgetFactory {
+
+    #vm = undefined;
+    #binding = undefined;
+    #mapWidgetModelBinding = undefined;
 
     activate() {
         this._initComponent();
     }
 
     deactivate() {
-        this[_binding].unbind();
-        this[_binding] = undefined;
-        this[_mapWidgetModelBinding].unbind();
-        this[_mapWidgetModelBinding] = undefined;
-        this[_vm] = undefined;
+        this.#binding.unbind();
+        this.#binding = undefined;
+        this.#mapWidgetModelBinding.unbind();
+        this.#mapWidgetModelBinding = undefined;
+        this.#vm = undefined;
     }
 
     createInstance() {
-        return VueDijit(this[_vm]);
+        return VueDijit(this.#vm);
     }
 
     _initComponent() {
@@ -36,18 +36,17 @@ export default class BasemapChangerWidgetFactory {
         });
 
         const properties = this._properties;
-        const selectedBasemapId = properties.selectedBasemapId;
-        basemapsModel.selectedId = selectedBasemapId;
+        basemapsModel.selectedId = properties.selectedBasemapId;
 
-        const vm = this[_vm] = new Vue(BasemapChangerWidget);
+        const vm = this.#vm = new Vue(BasemapChangerWidget);
         vm.basemaps = basemaps;
 
-        this[_binding] = Binding.for(vm, basemapsModel)
+        this.#binding = Binding.for(vm, basemapsModel)
             .syncAll("selectedId")
             .syncToLeftNow()
             .enable();
 
-        const mapWidgetModel = this[_mapWidgetModelBinding] = this._mapWidgetModel;
+        const mapWidgetModel = this.#mapWidgetModelBinding = this._mapWidgetModel;
         Binding.for(vm, mapWidgetModel)
             .syncAll("zoom")
             .syncToLeftNow()
