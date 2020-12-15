@@ -1,9 +1,13 @@
 <template>
     <v-container
-        @click="$emit('changeBasemap')"
-        grid-list-md>
-        <v-layout row wrap>
-            <v-flex md12>{{ title }}</v-flex>
+        grid-list-md
+        @click="$emit('changeBasemap')">
+        <v-layout
+            row
+            wrap>
+            <v-flex md12>
+                {{ title }}
+            </v-flex>
         </v-layout>
     </v-container>
 </template>
