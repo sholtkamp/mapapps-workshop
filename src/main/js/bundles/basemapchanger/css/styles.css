@@ -1,3 +1,7 @@
+.ctAppRoot .basemapChangerWidget .basemapEntry {
+    cursor: pointer;
+}
+
 .ctAppRoot .basemapChangerWidget .basemapEntry.selected {
     border: 2px solid blue;
 }

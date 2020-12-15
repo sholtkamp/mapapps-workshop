@@ -8,7 +8,7 @@
                 :id="basemap.id"
                 :key="basemap.id"
                 :title="basemap.title"
-                :isSelected="basemap.id === selectedId"
+                :is-selected="basemap.id === selectedId"
                 class="basemapEntry"
                 @change-basemap="selectedId = basemap.id"
             ></basemap>
