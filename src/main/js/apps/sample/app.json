@@ -61,13 +61,12 @@
                     {
                         "id": "esri_street",
                         "basemap": "streets",
-                        "title": "Strassen",
-                        "selected": true
+                        "title": "Straßen"
                     },
                     {
                         "id": "esri_street2",
                         "basemap": "streets-vector",
-                        "title": "Strassen Vector"
+                        "title": "Straßen Vector"
                     },
                     {
                         "id": "esri_satellite",
@@ -78,6 +77,12 @@
                         "id": "esri_hybrid",
                         "basemap": "hybrid",
                         "title": "Hybrid"
+                    },
+                    {
+                        "id": "esri_topo",
+                        "basemap": "topo",
+                        "title": "Topo",
+                        "selected": true
                     }
                 ],
                 "map": {
