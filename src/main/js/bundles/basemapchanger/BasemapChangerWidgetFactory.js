@@ -46,8 +46,8 @@ export default class BasemapChangerWidgetFactory {
             .syncToLeftNow()
             .enable();
 
-        const mapWidgetModel = this.#mapWidgetModelBinding = this._mapWidgetModel;
-        Binding.for(vm, mapWidgetModel)
+        const mapWidgetModel = this._mapWidgetModel;
+        this.#mapWidgetModelBinding = Binding.for(vm, mapWidgetModel)
             .syncAll("zoom")
             .syncToLeftNow()
             .enable();
