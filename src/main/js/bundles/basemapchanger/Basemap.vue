@@ -1,10 +1,14 @@
 <template>
     <v-container
-        @click="$emit('changeBasemap')"
+        grid-list-md
         :class="{selected: isSelected}"
-        grid-list-md>
-        <v-layout row wrap>
-            <v-flex md12>{{ title }}</v-flex>
+        @click="$emit('change-basemap')">
+        <v-layout
+            row
+            wrap>
+            <v-flex md12>
+                {{ title }}
+            </v-flex>
         </v-layout>
     </v-container>
 </template>
