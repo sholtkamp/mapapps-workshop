@@ -1,15 +1,17 @@
 <template>
     <v-container grid-list-md>
-        <v-layout row wrap>
+        <v-layout
+            row
+            wrap>
             <basemap
                 v-for="basemap in basemaps"
-                class="basemapEntry"
-                :key="basemap.id"
                 :id="basemap.id"
+                :key="basemap.id"
                 :title="basemap.title"
                 :is-selected="basemap.id === selectedId"
                 :thumbnail-url="basemap.thumbnailUrl"
-                @changeBasemap="selectedId = basemap.id"
+                class="basemapEntry"
+                @change-basemap="selectedId = basemap.id"
             ></basemap>
         </v-layout>
     </v-container>
