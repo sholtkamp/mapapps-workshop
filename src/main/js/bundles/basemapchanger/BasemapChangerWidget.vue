@@ -9,7 +9,7 @@
                 :key="basemap.id"
                 :title="basemap.title"
                 class="basemapEntry"
-                @changeBasemap="selectedId = basemap.id"
+                @change-basemap="selectedId = basemap.id"
             ></basemap>
         </v-layout>
     </v-container>
