@@ -5,10 +5,14 @@
 ```javascript
 <template>
     <v-container
-        @click="$emit('changeBasemap')"
-        grid-list-md>
-        <v-layout row wrap>
-            <v-flex md12>{{ title }}</v-flex>
+        grid-list-md
+        @click="$emit('changeBasemap')">
+        <v-layout
+            row
+            wrap>
+            <v-flex md12>
+                {{ title }}
+            </v-flex>
         </v-layout>
     </v-container>
 </template>
@@ -53,13 +57,15 @@ export default {
 ```javascript
 <template>
     <v-container grid-list-md>
-        <v-layout row wrap>
+        <v-layout
+            row
+            wrap>
             <basemap
                 v-for="basemap in basemaps"
-                class="basemapEntry"
-                :key="basemap.id"
                 :id="basemap.id"
+                :key="basemap.id"
                 :title="basemap.title"
+                class="basemapEntry"
                 @changeBasemap="selectedId = basemap.id"
             ></basemap>
         </v-layout>
