@@ -1,59 +1,98 @@
-# Übung 9
+# Übung 10
 
-1. Hinzufügen der isSelected-Property zur Basemap.vue Komponente:
+1. Hinzufügen der thumbnailUrl-Property zum basemaps-Array in der BasemapChangerWidgetFactory:
 
 ```javascript
-export default {
-    props: {
-        id: {
-            type: String,
-            default: ""
-        },
-        title: {
-            type: String,
-            default: ""
-        },
-        isSelected: {
-            type: Boolean,
-            default: false
-        }
+const basemaps = basemapsModel.basemaps.map((basemap) => {
+    return {
+        id: basemap.id,
+        title: basemap.title,
+        thumbnailUrl: basemap.thumbnailUrl
     }
-};
+});
 ```
 
-2. Binden der selected Klasse an den container der Basemap.vue-Komponente, wenn isSelected den Wert true annimmt:
+2. Anpassen der basemaps in der app.json:
 
-```html
-<template>
-    <v-container
-        @click="$emit('changeBasemap')"
-        :class="{selected: isSelected}"
-        grid-list-md>
-        <v-layout row wrap>
-            <v-flex md12>{{ title }}</v-flex>
-        </v-layout>
-    </v-container>
-</template>
+```javascript
+"basemaps": [
+    {
+        "id": "esri_street",
+        "basemap": "streets",
+        "title": "Strassen",
+        "selected": true
+    },
+    {
+        "id": "esri_street2",
+        "basemap": "streets-vector",
+        "title": "Strassen Vector"
+    },
+    {
+        "id": "esri_satellite",
+        "basemap": "satellite",
+        "title": "Satellit"
+    },
+    {
+        "id": "esri_hybrid",
+        "basemap": "hybrid",
+        "title": "Hybrid"
+    }
+]
 ```
 
-3. Binden der isSelected-Propery an die basemap Komponente in der BasemapChangerWidget.vue-Komponente:
+3. Binden der thumbnail-url-Propery an die basemap-Komponente in der BasemapChangerWidget.vue-Komponente:
 
-```html
+```javascript
 <basemap
     v-for="basemap in basemaps"
     class="basemapEntry"
     :key="basemap.id"
     :id="basemap.id"
     :title="basemap.title"
-    :isSelected="basemap.id === selectedId"
+    :is-selected="basemap.id === selectedId"
+    :thumbnail-url="basemap.thumbnailUrl"
     @changeBasemap="selectedId = basemap.id"
 ></basemap>
 ```
 
-4. Hinzufügen eines Styles für die selected-Klasse in der styles.css:
+4. Hinzufügen der thumbnailUrl-Property in der Basemap.vue-Datei:
 
-```css
-.ctAppRoot .basemapChangerWidget .basemapEntry.selected {
-    border: 2px solid blue;
+```javascript
+props: {
+    id: {
+        type: String,
+        default: ""
+    },
+    title: {
+        type: String,
+        default: ""
+    },
+    isSelected: {
+        type: Boolean,
+        default: false
+    },
+    thumbnailUrl: {
+        type: String,
+        default: ""
+    }
 }
+```
+
+5. Anpassen des templates der Basemap.vue-Datei:
+
+```javascript
+<template>
+    <v-container
+        @click="$emit('changeBasemap')"
+        :class="{selected: isSelected}"
+        pa-0
+        grid-list-md text-xs-center>
+        <v-layout row wrap align-center>
+            <v-flex md6>
+                <v-img :src="thumbnailUrl"></v-img>
+            </v-flex>
+            <v-flex md6>{{ title }}</v-flex>
+        </v-layout>
+    </v-container>
+</template>
 ```
