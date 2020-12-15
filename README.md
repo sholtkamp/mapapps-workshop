@@ -6,7 +6,7 @@
 <template>
     <v-container
         grid-list-md
-        @click="$emit('changeBasemap')">
+        @click="$emit('change-basemap')">
         <v-layout
             row
             wrap>
@@ -66,7 +66,7 @@ export default {
                 :key="basemap.id"
                 :title="basemap.title"
                 class="basemapEntry"
-                @changeBasemap="selectedId = basemap.id"
+                @change-basemap="selectedId = basemap.id"
             ></basemap>
         </v-layout>
     </v-container>
