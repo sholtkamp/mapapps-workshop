@@ -53,17 +53,17 @@ const _mapWidgetModelBinding = Symbol("_mapWidgetModelBinding");
 
 ```javascript
 deactivate() {
-    this[_binding].unbind();
-    this[_binding] = undefined;
-    this[_mapWidgetModelBinding].unbind();
-    this[_mapWidgetModelBinding] = undefined;
-    this[_vm] = undefined;
+    this.#binding.unbind();
+    this.#binding = undefined;
+    this.#mapWidgetModelBinding.unbind();
+    this.#mapWidgetModelBinding = undefined;
+    this.#vm = undefined;
 }
 ```
 
 ```javascript
 const mapWidgetModel = this._mapWidgetModel;
-this[_mapWidgetModelBinding] = Binding.for(vm, mapWidgetModel)
+this.#mapWidgetModelBinding = Binding.for(vm, mapWidgetModel)
     .syncAll("zoom")
     .syncToLeftNow()
     .enable();
@@ -74,17 +74,19 @@ this[_mapWidgetModelBinding] = Binding.for(vm, mapWidgetModel)
 ```javascript
 <template>
     <v-container grid-list-md>
-        <v-layout row wrap>
+        <v-layout
+            row
+            wrap>
             <v-flex md12>
                 <basemap
                     v-for="basemap in basemaps"
-                    class="basemapEntry"
-                    :key="basemap.id"
                     :id="basemap.id"
+                    :key="basemap.id"
                     :title="basemap.title"
                     :is-selected="basemap.id === selectedId"
                     :thumbnail-url="basemap.thumbnailUrl"
-                    @changeBasemap="selectedId = basemap.id"
+                    class="basemapEntry"
+                    @change-basemap="selectedId = basemap.id"
                 ></basemap>
             </v-flex>
             <v-flex md12>
