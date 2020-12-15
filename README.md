@@ -26,11 +26,15 @@ export default {
 ```html
 <template>
     <v-container
-        @click="$emit('changeBasemap')"
+        grid-list-md
         :class="{selected: isSelected}"
-        grid-list-md>
-        <v-layout row wrap>
-            <v-flex md12>{{ title }}</v-flex>
+        @click="$emit('change-basemap')">
+        <v-layout
+            row
+            wrap>
+            <v-flex md12>
+                {{ title }}
+            </v-flex>
         </v-layout>
     </v-container>
 </template>
@@ -41,18 +45,22 @@ export default {
 ```html
 <basemap
     v-for="basemap in basemaps"
-    class="basemapEntry"
-    :key="basemap.id"
     :id="basemap.id"
+    :key="basemap.id"
     :title="basemap.title"
-    :isSelected="basemap.id === selectedId"
-    @changeBasemap="selectedId = basemap.id"
+    :is-selected="basemap.id === selectedId"
+    class="basemapEntry"
+    @change-basemap="selectedId = basemap.id"
 ></basemap>
 ```
 
 4. Hinzufügen eines Styles für die selected-Klasse in der styles.css:
 
 ```css
+.ctAppRoot .basemapChangerWidget .basemapEntry {
+    cursor: pointer;
+}
+
 .ctAppRoot .basemapChangerWidget .basemapEntry.selected {
     border: 2px solid blue;
 }
