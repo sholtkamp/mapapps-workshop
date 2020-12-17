@@ -21,7 +21,7 @@ _initComponent() {
 
     const vm = this.#vm = new Vue(BasemapChangerWidget);
 
-    this[_binding] = Binding.for(vm, basemapsModel)
+    this.#binding = Binding.for(vm, basemapsModel)
         .syncAll("selectedId")
         .syncToLeftNow()
         .enable();
