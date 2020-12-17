@@ -38,12 +38,11 @@ _initComponent() {
     const properties = this._properties;
     basemapsModel.selectedId = properties.selectedBasemapId;
 
-    const vm = this[_vm] = new Vue(BasemapChangerWidget);
+    const vm = this.#vm = new Vue(BasemapChangerWidget);
     vm.basemaps = basemaps;
 
-    this[_binding] = Binding.for(vm, basemapsModel)
+    this.#binding = Binding.for(vm, basemapsModel)
         .syncAll("selectedId")
-        .syncAllToLeft("basemaps")
         .syncToLeftNow()
         .enable();
 }
