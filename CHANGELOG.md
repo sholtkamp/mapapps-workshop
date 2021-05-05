@@ -1,8 +1,92 @@
 # Changelog
 
 All notable changes to this project will be documented in this file.
+## [4.10.1] - 2020-12-09
+
+### Changed
+
+- Support for map.apps 4.10.1
+
+## [4.10.0] - 2020-12-08
+
+### Changed
+
+- Support for map.apps 4.10.0
+
+- Change `mapapps.version` property in `./pom.xml`  to `4.10.0`
+- Change `ct.jsregistry.version` property in `./pom.xml`  to `1.3.10`
+- Change `nodeVersion` property in `./pom.xml`  to `v14.15.1`
+- Change `npmVersion` property in `./pom.xml`  to `6.14.9`
+- Update `@types/arcgis-js-api` to `4.17.0` (`package.json`)
+- Update `ct-mapapps-gulp-js` to `^0.5.5` (`package.json`)
+- Update `puppeteer` to `^5.5.0` (`package.json`)
+- Update `eslint-config-ct-prodeng` to `^1.1.16` (`package.json`)
+- Update `stylelint-config-ct-prodeng` to `1.0.3` (`package.json`)
+
+- improved documentation, e.g. [MIGRATION.md](./MIGRATION.md)
+- remove `optimizeCSS` goal from `./pom.xml`
+
+```xml
+<execution>
+    <id>optimize CSS</id>
+    <goals>
+        <goal>optimizeCSS</goal>
+    </goals>
+    <phase>compile</phase>
+    <configuration>
+        <cssFiles>
+            <includes>
+                <include>bundles/*/*/*.css</include>
+            </includes>
+            <excludes>
+                <exclude>**/themeSettings.css</exclude>
+            </excludes>
+        </cssFiles>
+    </configuration>
+</execution>
+```
+
+- add execution of `gulp compress` task to `compress` profile in `pom.xml`
+
+```xml
+<profile>
+    <id>compress</id>
+    <properties>
+        <gulp.task>compress</gulp.task>
+    </properties>
+    ...
+</profile>
+```
+
+- add `compress` task to `./gulpfile.js`
+
+```js
+gulp.task("compress",
+    gulp.series(
+        "copy-resources",
+        "themes-copy",
+        gulp.parallel(
+            "js-transpile",
+            gulp.series(
+                "themes-compile",
+                "themes-compress"
+            )
+        )
+    )
+);
+```
+
+## [4.9.2] - 2020-10-06
+
+### Changed
+
+- Support for map.apps 4.9.2
+
+- Change `mapapps.version` property in `./pom.xml`  to `4.9.2`
 
 ## [4.9.1] - 2020-09-04
+
+### Changed
 
 - Support for map.apps 4.9.1
 
@@ -88,6 +172,22 @@ All notable changes to this project will be documented in this file.
 - Support for map.apps 4.8.2.
 - Replace `babel-polyfill` by `apprt-polyfill`.
 - Replace `$apprt.load` and `$apprt.lauchAppFromParam` by `$apprt.startApp`
+  note that the function signature also changed
+  instead of:
+    ```js
+    $apprt.load(function(Launcher) {
+        new Launcher({
+            configLocation: "builderapps"
+        }).launchApp("@@appId@@");
+    ```
+  it will be:
+    ```js
+     $apprt.startApp({
+        configLocation: "builderapps",
+        param: "app",
+        defaultApp: "@@appId@@"
+    });
+    ```
 - Introduce property `skip.apps.upload` to decide if apps should be uploaded
 - Apps located in `/src/main/js/apps/[app]` are by default zipped into the folder `/target/[app].zip`.
 
