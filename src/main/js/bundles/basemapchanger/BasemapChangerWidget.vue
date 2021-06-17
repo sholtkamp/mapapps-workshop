@@ -2,7 +2,8 @@
     <v-container grid-list-md>
         <v-layout
             row
-            wrap>
+            wrap
+        >
             <v-flex md12>
                 <basemap
                     v-for="basemap in basemaps"
@@ -13,7 +14,7 @@
                     :thumbnail-url="basemap.thumbnailUrl"
                     class="basemapEntry"
                     @change-basemap="selectedId = basemap.id"
-                ></basemap>
+                />
             </v-flex>
             <v-flex md12>
                 <v-slider
@@ -21,8 +22,8 @@
                     max="15"
                     min="1"
                     label="Zoom"
-                    thumb-label>
-                </v-slider>
+                    thumb-label
+                />
             </v-flex>
         </v-layout>
     </v-container>
